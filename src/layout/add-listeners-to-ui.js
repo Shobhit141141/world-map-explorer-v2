@@ -13,80 +13,64 @@ import { closeSearchResultsOnClickOutside } from '../utils/general-events.js';
 import { closeSound } from '../utils/sounds.js';
 import { map } from '../components/map.js';
 
-
-
 let layersBtn = document.getElementById('layers-btn'); //gets the layers button element
 let layersDropdown = document.getElementById('layers-dropdown'); //gets the layers dropdown element
 
-let geographicalLayerBtn = document.getElementById("geographical-layer"); //gets the geographical layer button element
-let politicalLayerBtn = document.getElementById("political-layer"); //gets the political layer button element
+let geographicalLayerBtn = document.getElementById('geographical-layer'); //gets the geographical layer button element
+let politicalLayerBtn = document.getElementById('political-layer'); //gets the political layer button element
 
-let locationArrow = document
-  .getElementById('controls-box')
-  .querySelector('.fa-location-arrow');
-let plusIcon = document
-  .getElementById('controls-box')
-  .querySelector('.fa-plus');
-let minusIcon = document
-  .getElementById('controls-box')
-  .querySelector('.fa-minus');
+let locationArrow = document.getElementById('controls-box').querySelector('.fa-location-arrow');
+let plusIcon = document.getElementById('controls-box').querySelector('.fa-plus');
+let minusIcon = document.getElementById('controls-box').querySelector('.fa-minus');
 
+export function addListenerstoUI() {
+  layersBtn.addEventListener('click', function () {
+    layersDropdown.style.display = layersDropdown.style.display === 'block' ? 'none' : 'block';
+  });
 
+  locationArrow.addEventListener('click', fetchCurrentLocation);
 
-export function addListenerstoUI(){
-  
-layersBtn.addEventListener('click', function () {
-  layersDropdown.style.display =
-    layersDropdown.style.display === 'block' ? 'none' : 'block';
-});
+  plusIcon.addEventListener('click', function () {
+    map.zoomIn();
+  });
 
-locationArrow.addEventListener('click', fetchCurrentLocation);
+  minusIcon.addEventListener('click', function () {
+    map.zoomOut();
+  });
 
-plusIcon.addEventListener('click', function () {
-  map.zoomIn();
-});
-
-minusIcon.addEventListener('click', function () {
-  map.zoomOut();
-});
-
-document.getElementById('search-input').addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') {
+  document.getElementById('search-input').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      onSubmitonMainSearchBar();
+    }
+  });
+  document.getElementById('searchbutton').addEventListener('click', function (e) {
     onSubmitonMainSearchBar();
-  }
-});
-document.getElementById('searchbutton').addEventListener('click', function (e) {
-  onSubmitonMainSearchBar();
-});
-document.addEventListener('click', closeSearchResultsOnClickOutside);
+  });
+  document.addEventListener('click', closeSearchResultsOnClickOutside);
 
+  detailsCloseButton.addEventListener('click', function () {
+    closeSound.play();
+    document.getElementById('searchdetails').style.display = 'none';
+    if (geoLayer != null) {
+      geoLayer.remove();
+    }
+    marker.clearGeoJson();
+    cancelShowPlaceDetails();
+  });
 
-detailsCloseButton.addEventListener('click', function () {
-  closeSound.play()
-  document.getElementById("searchdetails").style.display = "none";
-  if (geoLayer != null) {
-    geoLayer.remove();
-  }
-  marker.clearGeoJson();
-  cancelShowPlaceDetails()
-})
-
-
-
-
-  geographicalLayerBtn.addEventListener("click", function () {
+  geographicalLayerBtn.addEventListener('click', function () {
     // Add your logic to switch to the geographical layer
-    layersDropdown.style.display = "none"; // Hide dropdown
+    layersDropdown.style.display = 'none'; // Hide dropdown
     tileLayerPolitical.remove();
     tileLayerGeographical.addTo(map);
-    notifySreenReader("Switched to geograhical map");
+    notifySreenReader('Switched to geograhical map');
   });
   // Event listener for political layer
-  politicalLayerBtn.addEventListener("click", function () {
+  politicalLayerBtn.addEventListener('click', function () {
     // Add your logic to switch to the political layer
-    layersDropdown.style.display = "none"; // Hide dropdown
+    layersDropdown.style.display = 'none'; // Hide dropdown
     tileLayerGeographical.remove();
     tileLayerPolitical.addTo(map);
-    notifySreenReader("Switched to political map");
+    notifySreenReader('Switched to political map');
   });
 }

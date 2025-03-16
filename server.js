@@ -22,7 +22,7 @@ const mimeTypes = {
 
 const server = http.createServer((req, res) => {
   let filePath = '.' + req.url;
-  if (filePath == './') filePath = './public/index.html';  // Default to index.html
+  if (filePath == './') filePath = './public/index.html'; // Default to index.html
 
   const extname = String(path.extname(filePath)).toLowerCase();
   const contentType = mimeTypes[extname] || 'application/octet-stream';
@@ -30,7 +30,7 @@ const server = http.createServer((req, res) => {
   fs.readFile(path.join(__dirname, filePath), (err, content) => {
     if (err) {
       res.writeHead(404);
-      res.end('Sorry, we couldn\'t find that!');
+      res.end("Sorry, we couldn't find that!");
     } else {
       res.writeHead(200, { 'Content-Type': contentType });
       res.end(content);

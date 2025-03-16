@@ -1,17 +1,16 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2023-25 Zendalona
  * This software is licensed under the GPL-3.0 License.
  * See the LICENSE file in the root directory for more information.
-  */
-import { notifyLoading, notifySreenReader } from "../utils/accessibility.js";
-import { keyboardselect } from "../utils/keydown-helpers.js";
-import { successSound } from "../utils/sounds.js";
-import { geocodingAPI, headerofNominatim } from "../utils/to-km-or-meter.js";
+ */
+import { notifyLoading, notifySreenReader } from '../utils/accessibility.js';
+import { keyboardselect } from '../utils/keydown-helpers.js';
+import { successSound } from '../utils/sounds.js';
+import { geocodingAPI, headerofNominatim } from '../utils/to-km-or-meter.js';
 
 var placeIds = [];
 
 let searchLoadingInterval; // To store the interval globally for cancellation
-
 
 export function performSearch(inputField, excludedPlaceIds = []) {
   removeResults(); // Clear the previous search results
@@ -43,7 +42,7 @@ export function performSearch(inputField, excludedPlaceIds = []) {
       })
       .catch((error) => {
         clearInterval(searchLoadingInterval);
-        console.error("Error fetching search results:", error);
+        console.error('Error fetching search results:', error);
         reject(error);
       });
   });
@@ -52,7 +51,7 @@ export function performSearch(inputField, excludedPlaceIds = []) {
 // Clears the search results and associated event listeners
 function clearSearchResults(searchResults) {
   if (searchResults) {
-    searchResults.parentElement?.removeEventListener("keydown", keyboardselect);
+    searchResults.parentElement?.removeEventListener('keydown', keyboardselect);
     searchResults.remove();
   }
 }
@@ -60,27 +59,24 @@ function clearSearchResults(searchResults) {
 // Initializes the search results container
 function initializeResultsContainer(inputField) {
   let container = inputField.nextElementSibling;
-  if (!container || container.tagName !== "UL") {
-    container = document.createElement("ul");
-    container.id = "search-results";
+  if (!container || container.tagName !== 'UL') {
+    container = document.createElement('ul');
+    container.id = 'search-results';
     container.tabIndex = 7;
-    container.setAttribute("aria-label", "Select your result");
-    inputField.parentElement.parentNode.insertBefore(
-      container,
-      inputField.parentNode.nextSibling
-    );
+    container.setAttribute('aria-label', 'Select your result');
+    inputField.parentElement.parentNode.insertBefore(container, inputField.parentNode.nextSibling);
   }
-  container.parentElement.addEventListener("keydown", keyboardselect);
+  container.parentElement.addEventListener('keydown', keyboardselect);
   return container;
 }
 
 // Fetches search results from the API
 function fetchSearchResults(query, excludedPlaceIds) {
   const url = `${geocodingAPI}/search.php?q=${encodeURIComponent(
-    query
+    query,
   )}&format=jsonv2&exclude_place_ids=${encodeURIComponent(excludedPlaceIds)}`;
 
-  return fetch(url,headerofNominatim).then((response) => {
+  return fetch(url, headerofNominatim).then((response) => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -91,8 +87,8 @@ function fetchSearchResults(query, excludedPlaceIds) {
 // Renders search results in the results container
 function renderSearchResults(data, container, inputField, resolve) {
   successSound.play();
-  notifySreenReader("Select from result");
-  container.innerHTML = "";
+  notifySreenReader('Select from result');
+  container.innerHTML = '';
 
   if (data.length === 0) {
     addNoResultsMessage(container);
@@ -111,18 +107,18 @@ function renderSearchResults(data, container, inputField, resolve) {
 
 // Adds a "No Results Found" message
 function addNoResultsMessage(container) {
-  const noResultsItem = document.createElement("li");
-  noResultsItem.textContent = "No results found";
+  const noResultsItem = document.createElement('li');
+  noResultsItem.textContent = 'No results found';
   container.appendChild(noResultsItem);
 }
 
 // Adds a "More Results" option
 function addMoreResultsOption(container, inputField, placeIds, resolve) {
-  const moreResultsItem = document.createElement("li");
-  moreResultsItem.textContent = "More results";
+  const moreResultsItem = document.createElement('li');
+  moreResultsItem.textContent = 'More results';
   moreResultsItem.tabIndex = 1;
-  moreResultsItem.addEventListener("click", () => {
-  removeResults();
+  moreResultsItem.addEventListener('click', () => {
+    removeResults();
     performSearch(inputField, placeIds).then(resolve);
     inputField.focus();
     container.scrollTop = 0;
@@ -132,20 +128,22 @@ function addMoreResultsOption(container, inputField, placeIds, resolve) {
 
 // Creates a search result list item
 function createResultListItem(result, onClick) {
-  const listItem = document.createElement("li");
+  const listItem = document.createElement('li');
   listItem.innerHTML = `
     <span style="color: grey; display: flex;">${result.type}&nbsp</span>
     ${result.display_name}`;
-  listItem.setAttribute("aria-label", result.display_name);
+  listItem.setAttribute('aria-label', result.display_name);
   listItem.tabIndex = 1;
-  listItem.addEventListener("click", onClick);
+  listItem.addEventListener('click', onClick);
   return listItem;
 }
 
-export function removeResults(){
+export function removeResults() {
   clearInterval(searchLoadingInterval);
-  if(document.getElementById("search-results")){
-    document.getElementById("search-results")?.parentElement?.removeEventListener('keydown', keyboardselect)
-    document.getElementById("search-results")?.remove();
+  if (document.getElementById('search-results')) {
+    document
+      .getElementById('search-results')
+      ?.parentElement?.removeEventListener('keydown', keyboardselect);
+    document.getElementById('search-results')?.remove();
   }
 }
