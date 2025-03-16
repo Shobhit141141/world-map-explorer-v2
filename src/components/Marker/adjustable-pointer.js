@@ -1,8 +1,8 @@
-﻿/*
+﻿/* 
  * Copyright (c) 2023-25 Zendalona
  * This software is licensed under the GPL-3.0 License.
  * See the LICENSE file in the root directory for more information.
- */
+  */
 import { notifySreenReader } from '../../utils/accessibility.js';
 import { map } from '../map.js';
 import { toKMorMeter } from '../../utils/to-km-or-meter.js';
@@ -11,19 +11,20 @@ import Marker from './marker.js';
 import { clickSound } from '../../utils/sounds.js';
 
 let isPointerStable = true; //flag to check if arrow is moving to reduce multiple api calls until first one is completed
-export let adjustablePointer; // initiaizing object of adjustable pointer
+export let adjustablePointer;// initiaizing object of adjustable pointer
 export function initializeAdjustablePointer(coord) {
   if (marker) {
     marker.clearGeoJson();
     marker.remove();
   }
-
-  adjustablePointer = new L.adjustablePointer(coord); // distance in meters, angle in degrees
-  adjustablePointer.addTo(map);
-  notifySreenReader(
-    `Adjustable pointer on.use 'UP' and 'DOWN' arrow keys to change distance. 'LEFT' and 'RIGHT' arrow keys to change angle`,
-    true,
-  );
+  
+    adjustablePointer = new L.adjustablePointer(coord); // distance in meters, angle in degrees
+    adjustablePointer.addTo(map);
+    notifySreenReader(
+      `Adjustable pointer on.use 'UP' and 'DOWN' arrow keys to change distance. 'LEFT' and 'RIGHT' arrow keys to change angle`,
+      true
+    );
+  
 }
 
 L.adjustablePointer = L.Layer.extend({
@@ -69,20 +70,23 @@ L.adjustablePointer = L.Layer.extend({
     this._handleSecondaryMove = function (e) {
       adjustablePointer.angle = adjustablePointer._getAngle(marker1, marker2);
       arrowIconSvg.setAttribute('transform', 'rotate(' + (adjustablePointer.angle - 90) + ')');
-      adjustablePointer.distanceOriginal = distanceOnMap(marker1.getLatLng(), marker2.getLatLng());
+      adjustablePointer.distanceOriginal = distanceOnMap(
+        marker1.getLatLng(),
+        marker2.getLatLng()
+      );
       adjustablePointer.realangle = adjustablePointer._getAngle(marker1, marker2, true);
       adjustablePointer.flatdist = //calculating flat distance with maths
         (Math.sqrt(
           Math.pow(
             adjustablePointer.secondaryMarker.getLatLng().lat -
               adjustablePointer.primaryMarker.getLatLng().lat,
-            2,
+            2
           ) +
             Math.pow(
               adjustablePointer.secondaryMarker.getLatLng().lng -
                 adjustablePointer.primaryMarker.getLatLng().lng,
-              2,
-            ),
+              2
+            )
         ) *
           40075016.7) /
         360;
@@ -91,12 +95,12 @@ L.adjustablePointer = L.Layer.extend({
     };
     this._map.on('zoom', function () {
       adjustablePointer.distance = L.point(
-        map.latLngToContainerPoint(marker1.getLatLng()),
+        map.latLngToContainerPoint(marker1.getLatLng())
       ).distanceTo(L.point(map.latLngToContainerPoint(marker2.getLatLng())));
     });
     this._handleSecondaryMoveEnd = function () {
       adjustablePointer.distance = L.point(
-        map.latLngToContainerPoint(marker1.getLatLng()),
+        map.latLngToContainerPoint(marker1.getLatLng())
       ).distanceTo(L.point(map.latLngToContainerPoint(marker2.getLatLng())));
       setTimeout(() => {
         findplaceNamAandData
@@ -154,27 +158,27 @@ L.adjustablePointer = L.Layer.extend({
     switch (event.code) {
       case 'KeyJ':
         adjustablePointer.remove();
-        marker = new Marker(adjustablePointer.primaryMarker.getLatLng()).addTo(map);
+        marker = new Marker(adjustablePointer.primaryMarker.getLatLng()).addTo(
+          map
+        );
         notifySreenReader('Swithced to Curser', true);
         adjustablePointer = null;
 
         break;
       case 'ArrowUp':
-        adjustablePointer.distance = adjustablePointer.distance + 10;
+        adjustablePointer.distance = adjustablePointer.distance + 10; 
         adjustablePointer._secondoryupdate(adjustablePointer.primaryMarker.getLatLng());
+        
 
         break;
       case 'ArrowDown':
-        if (adjustablePointer.distance < 50) {
-          notifySreenReader(
-            'Minimum distance reached, please zoom in to reduce distance more.',
-            true,
-          );
-        } else {
+        if(adjustablePointer.distance < 50){
+          notifySreenReader('Minimum distance reached, please zoom in to reduce distance more.', true);
+        }else{
           adjustablePointer.distance = adjustablePointer.distance - 10;
-          adjustablePointer._secondoryupdate(adjustablePointer.primaryMarker.getLatLng());
+        adjustablePointer._secondoryupdate(adjustablePointer.primaryMarker.getLatLng());
         }
-
+       
         break;
       case 'ArrowRight':
         adjustablePointer.angle = adjustablePointer.angle + 1;
@@ -192,7 +196,9 @@ L.adjustablePointer = L.Layer.extend({
       case 'Enter':
         adjustablePointer.remove();
 
-        marker = new Marker(adjustablePointer.secondaryMarker.getLatLng()).addTo(map);
+        marker = new Marker(adjustablePointer.secondaryMarker.getLatLng()).addTo(
+          map
+        );
         notifySreenReader('Curser placed');
         adjustablePointer = null;
 
@@ -262,7 +268,11 @@ L.adjustablePointer = L.Layer.extend({
       iconSize: [18, 15], // Adjust the icon size as needed
       iconAnchor: [9, 7.5], // Adjust the anchor point as needed
     });
-    const destinationLatLng = this._calculateDestination(primary, this.distance, this.angle);
+    const destinationLatLng = this._calculateDestination(
+      primary,
+      this.distance,
+      this.angle
+    );
 
     // Add or move the secondary marker
     if (this.secondaryMarker) {
@@ -273,9 +283,15 @@ L.adjustablePointer = L.Layer.extend({
         draggable: true,
       }).addTo(this._map);
     }
-    if (this.secondaryMarker.getLatLng().lat > 85 || this.secondaryMarker.getLatLng().lat < -85) {
+    if (
+      this.secondaryMarker.getLatLng().lat > 85 ||
+      this.secondaryMarker.getLatLng().lat < -85
+    ) {
     }
-    if (this.secondaryMarker.getLatLng().lng > 180 || this.secondaryMarker.getLatLng().lnt < -180) {
+    if (
+      this.secondaryMarker.getLatLng().lng > 180 ||
+      this.secondaryMarker.getLatLng().lnt < -180
+    ) {
     }
     this._updateInfoBox();
     this.flatdist =
@@ -283,13 +299,13 @@ L.adjustablePointer = L.Layer.extend({
         Math.pow(
           adjustablePointer.secondaryMarker.getLatLng().lat -
             adjustablePointer.primaryMarker.getLatLng().lat,
-          2,
+          2
         ) +
           Math.pow(
             adjustablePointer.secondaryMarker.getLatLng().lng -
               adjustablePointer.primaryMarker.getLatLng().lng,
-            2,
-          ),
+            2
+          )
       ) *
         40075016.7) /
       360;
@@ -303,12 +319,20 @@ L.adjustablePointer = L.Layer.extend({
 
       // Update the display:
 
-      document.getElementById('distanceDisplay').textContent = toKMorMeter(this.distanceOriginal);
-      document.getElementById('flatdistance').textContent = toKMorMeter(this.flatdist);
+      
+
+      document.getElementById('distanceDisplay').textContent = toKMorMeter(
+        this.distanceOriginal
+      );
+      document.getElementById('flatdistance').textContent = toKMorMeter(
+        this.flatdist
+      );
       document.getElementById('angleDisplay').textContent =
         Math.round(this.angle) + ' degrees. ' + getDirection(this.angle);
       document.getElementById('realAngle').textContent =
-        Math.round(this.realangle) + ' degrees. ' + getDirection(this.realangle);
+        Math.round(this.realangle) +
+        ' degrees. ' +
+        getDirection(this.realangle);
       document.getElementById('lat').textContent =
         ' Latitude : ' + this.secondaryMarker.getLatLng().lat.toFixed(5) + '.';
       document.getElementById('lng').textContent =
@@ -341,6 +365,7 @@ function distanceOnMap(point1, point2) {
   return c * r * 1000;
 }
 
+
 function getDirection(angle) {
   angle = (angle + 360) % 360; // Normalize angle to [0, 360)
   const directions = [
@@ -357,28 +382,20 @@ function getDirection(angle) {
   return directions[index];
 }
 
-const whenPointerStable = _.debounce((event) => {
+
+const whenPointerStable=_.debounce((event) => {
   if (event.code.startsWith('Arrow')) {
-    if (event.code == 'ArrowUp' || event.code == 'ArrowDown') {
-      notifySreenReader(
-        'Flat Distance: ' +
-          toKMorMeter(adjustablePointer.flatdist) +
-          'Real: ' +
-          toKMorMeter(adjustablePointer.distanceOriginal),
-      );
-    }
-    if (event.code == 'ArrowRight' || event.code == 'ArrowLeft') {
-      notifySreenReader(
-        'Angle: ' +
-          Math.round(adjustablePointer.angle) +
-          ' degrees. ' +
-          getDirection(adjustablePointer.angle),
-      );
-    }
-    findplaceNamAandData
-      .bind(adjustablePointer.secondaryMarker)(adjustablePointer.secondaryMarker)
-      .then((nm) => {
-        document.getElementById('placeDisplay').textContent = nm.name;
-      });
+      if(event.code == 'ArrowUp' || event.code == 'ArrowDown'){
+        notifySreenReader(
+          'Flat Distance: ' + toKMorMeter(adjustablePointer.flatdist) + 'Real: ' + toKMorMeter(adjustablePointer.distanceOriginal)
+        );
+      }
+      if(event.code == 'ArrowRight' || event.code == 'ArrowLeft'){
+        notifySreenReader('Angle: ' + Math.round(adjustablePointer.angle) + ' degrees. ' + getDirection(adjustablePointer.angle));
+      }
+      findplaceNamAandData
+        .bind(adjustablePointer.secondaryMarker)(adjustablePointer.secondaryMarker)
+        .then((nm) => {
+          document.getElementById('placeDisplay').textContent = nm.name;        });
   }
 }, 700);

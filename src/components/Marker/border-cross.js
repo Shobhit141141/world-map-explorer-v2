@@ -1,12 +1,12 @@
-﻿/*
+﻿/* 
  * Copyright (c) 2023-25 Zendalona
  * This software is licensed under the GPL-3.0 License.
  * See the LICENSE file in the root directory for more information.
- */
+  */
 import { map } from '../map.js';
 import { notifySreenReader } from '../../utils/accessibility.js';
 import { bordercrossSound } from '../../utils/sounds.js';
-import { isInindiaKashmir } from '../../services/nominatim.js';
+import { isInindiaKashmir } from "../../services/nominatim.js";
 import { osmIds } from '../../services/fetch-place.js';
 import { IndiaFull, kasmir } from '../../services/fetch-india.js';
 import { findborderpoints } from './border-distance.js';
@@ -20,13 +20,11 @@ let wentFar = 0; //for counting how far went when fetching border
 let Kashmir = kasmir; //for fetching kashmir border
 
 export function checkBorderCrossed(distance) {
-  if (this?._placeBorderofCurrentLocation) {
-    //checking if border is present already
+  if (this?._placeBorderofCurrentLocation) { //checking if border is present already
     if (
-      leafletPip.pointInLayer(
-        //checking if the marker is inside the border
+      leafletPip.pointInLayer(  //checking if the marker is inside the border
         this.getLatLng(),
-        this._placeBorderofCurrentLocation,
+        this._placeBorderofCurrentLocation
       ).length <= 0 &&
       isMarkerStable
     ) {
@@ -40,16 +38,19 @@ export function checkBorderCrossed(distance) {
           if (data.name != 'sea(mostly)') {
             checkBorderCrossed.bind(this)(0); // recalling the function to ensure the border is shown appropriately for the new location
           }
-          if (distance <= 60 && data.name != oldName.name) {
-            // checking the distance between the old and new location is less than 60 pixels, only then it is considered as border crossed
+          if (distance <= 60 && data.name != oldName.name) { // checking the distance between the old and new location is less than 60 pixels, only then it is considered as border crossed
             if (crossedhigherlevel(oldName, presentName)) {
+
               //if crossed to higher level border(like district to another state district)
               notifySreenReader(
                 `${oldName.display_name} crossed. ${data.display_name} entered`,
-                true,
+                true
               );
             } else {
-              notifySreenReader(`${oldName.name} crossed. ${data.name} entered`, true);
+              notifySreenReader(
+                `${oldName.name} crossed. ${data.name} entered`,
+                true
+              );
             }
             if (wentFar >= 7) {
               notifySreenReader('May be went too far');
@@ -73,11 +74,10 @@ export function checkBorderCrossed(distance) {
 
 //function for fetching and adding polygon to map
 export async function getBorder() {
-  if (!this._placeBorderofSelectedLocation) this._borderPoints = null; //clearing previous border points
+  if (!this._placeBorderofSelectedLocation) this._borderPoints=null; //clearing previous border points
   return new Promise(async (resolve, reject) => {
-    if (controller) {
-      //aborting previous fetch request
-      controller.abort();
+    if (controller) { //aborting previous fetch request
+      controller.abort(); 
     }
     controller = new AbortController();
     const signal = controller.signal;
@@ -85,10 +85,7 @@ export async function getBorder() {
     try {
       isMarkerStable = false;
       map.eachLayer((layer) => {
-        if (
-          layer instanceof L.GeoJSON &&
-          layer.getPane().classList.contains('leaflet-overlay-pane')
-        ) {
+        if (layer instanceof L.GeoJSON && layer.getPane().classList.contains('leaflet-overlay-pane')) {
           map.removeLayer(layer); // Remove the marker
         }
       });
@@ -97,7 +94,7 @@ export async function getBorder() {
         {
           signal: signal, // The signal object for cancellation
           referrerPolicy: 'strict-origin-when-cross-origin', // The referrer policy
-        },
+        }
       );
       let data = await response.json();
 
@@ -108,7 +105,7 @@ export async function getBorder() {
       if (data.features[0].properties.name === 'India') {
         data = IndiaFull;
       }
-      if (await isInindiaKashmir(this, presentName)) {
+      if (await isInindiaKashmir(this,presentName)) {
         presentName = { name: 'India', display_name: 'India' };
         data = IndiaFull;
       }
@@ -123,8 +120,7 @@ export async function getBorder() {
       //   return resolve(presentName);
       // }
       if (!this._placeBorderofSelectedLocation) this._geoJson = data;
-      if (!this._placeBorderofSelectedLocation)
-        this._borderPoints = findborderpoints.bind(this)(data);
+      if (!this._placeBorderofSelectedLocation) this._borderPoints = findborderpoints.bind(this)(data);
 
       this._placeBorderofCurrentLocation = L.geoJson(data, {
         fillOpacity: 0,
@@ -153,8 +149,7 @@ export async function getBorder() {
   });
 }
 
-function crossedhigherlevel(cro, ent) {
-  //for checking if crossed to higher level or not, like palakkad to coimbatore
+function crossedhigherlevel(cro, ent) { //for checking if crossed to higher level or not, like palakkad to coimbatore
   if (ent.place_rank >= 10) {
     if (
       ent.address?.state !== cro.address?.state ||
@@ -177,10 +172,11 @@ function crossedhigherlevel(cro, ent) {
 // for fixing district minimum view
 function getFixedZoom() {
   if (map.getZoom() >= 8) {
-    return 6;
+      return 6
   } else if (map.getZoom() >= 5 && map.getZoom() <= 7) {
-    return 5;
+      return 5
   } else if (map.getZoom() <= 4) {
-    return 2;
+      return 2
   }
 }
+

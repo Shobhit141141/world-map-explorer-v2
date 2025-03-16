@@ -3,8 +3,8 @@
  * This software is licensed under the GPL-3.0 License.
  * See the LICENSE file in the root directory for more information.
  */
-import { lockTabKey } from '../utils/keydown-helpers.js';
-import { closeSound } from '../utils/sounds.js';
+import { lockTabKey } from "../utils/keydown-helpers.js";
+import { closeSound } from "../utils/sounds.js";
 
 const disclaimer = document.createElement('div');
 disclaimer.id = 'disclaimer';
@@ -12,11 +12,11 @@ disclaimer.setAttribute('role', 'alert');
 disclaimer.setAttribute('aria-label', 'Disclaimer');
 
 const message = document.createElement('p');
-message.setAttribute('tabindex', 1);
-message.setAttribute('aria-atom', 'true');
+message.setAttribute("tabindex", 1);
+message.setAttribute("aria-atom","true");
 message.id = 'messagec';
 const messageContainer = document.createElement('div');
-messageContainer.id = 'message';
+messageContainer.id='message';
 message.innerHTML = `<p>
     <strong>Welcome to World-Map-Explorer</strong><br><br>
     Please note the following:<br>
@@ -40,24 +40,49 @@ closeButton.id = 'close-button';
 closeButton.setAttribute('aria-label', 'Close Disclaimer');
 closeButton.textContent = 'X';
 
-const lockTabKeyRefer = (event) => lockTabKey(event, message, closeButton);
+
+const lockTabKeyRefer = (event)=> lockTabKey(event, message, closeButton)
 
 closeButton.addEventListener('click', () => {
   document.removeEventListener('keydown', lockTabKeyRefer);
   disclaimer.remove();
-  closeSound.play();
+  closeSound.play()
 });
 message.appendChild(closeButton);
-
+  
 messageContainer.appendChild(message);
 disclaimer.appendChild(messageContainer);
 
-export function addDisclaimer() {
+export function addDisclaimer(){
   document.body.prepend(disclaimer);
 
-  document.addEventListener('keydown', lockTabKeyRefer);
+  document.addEventListener('keydown', lockTabKeyRefer);  
   // disclaimer part ends
-  window.onload = function () {
+  window.onload = function () { 
     message.focus();
-  };
-}
+  }
+}  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
