@@ -1,130 +1,129 @@
 body {
-    margin: 0;
+  margin: 0;
 }
-button{
+button {
   background: none;
   border: none;
 }
 header {
-    background:#ffffffdc;
-    color: #6F0E0E;
-    padding: 5px;
-    height: 30px;
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
-    border-bottom: 2px solid #A04242;
-    margin-left: 0;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    font-size: large;
+  background: #ffffffdc;
+  color: #6f0e0e;
+  padding: 5px;
+  height: 30px;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  border-bottom: 2px solid #a04242;
+  margin-left: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-size: large;
 }
-header button{
+header button {
   font-size: large;
   padding: 5px;
-  font-weight: bold;  
-  border: 2px solid #A04242;
+  font-weight: bold;
+  border: 2px solid #a04242;
   border-radius: 10px;
 }
 
 .header-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .map-logo {
-    width: 50px;
-    height: 50px;
-    margin-right: 0;
+  width: 50px;
+  height: 50px;
+  margin-right: 0;
 }
 
 #map-explorer-text {
-    margin: 0;
-    margin-left: 0;
+  margin: 0;
+  margin-left: 0;
 }
 
 .header-icons {
-    display: flex;
-    align-items: center;
-    height: 100%;
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 #settings-btn,
 #bookmark-btn,
-#help-btn {
-    margin-right: 20px;
-    cursor: pointer;
-    color: #A04242;
+#help-btn,
+#shortcut-btn {
+  margin-right: 20px;
+  cursor: pointer;
+  color: #a04242;
 }
 
 #login-btn {
-    cursor: pointer;
-    color: white;
-    padding: 2.5px 5px;
-    border: 1px solid #A04242;
-    border-radius: 8px;
-    background-color: #A04242;
-    margin-right: 10px;
+  cursor: pointer;
+  color: white;
+  padding: 2.5px 5px;
+  border: 1px solid #a04242;
+  border-radius: 8px;
+  background-color: #a04242;
+  margin-right: 10px;
 }
 
 .leaflet-control-zoom.leaflet-bar.leaflet-control {
-    display: none;
+  display: none;
 }
 
 .box-input input {
-    padding: 5px;
-    flex: 1;
-    border: none;
-    
+  padding: 5px;
+  flex: 1;
+  border: none;
+
   background-color: none !important;
   outline: none;
-  }
+}
 
 #c-search-input {
-    border-width: 2px ;
-    border-style: solid;
-    border-radius: 8px;
-    background-color: #FFFFFF;
-    border-color: rgb(0, 0, 0);
-    position: relative;
-    width: 100%;
-    min-width: 200px;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 8px;
+  background-color: #ffffff;
+  border-color: rgb(0, 0, 0);
+  position: relative;
+  width: 100%;
+  min-width: 200px;
 
-    height: 30px;
+  height: 30px;
 }
 #c-search-input input {
-    padding: 7px;
-    border-radius: 8px;
-    margin: 5px;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: absolute;
+  padding: 7px;
+  border-radius: 8px;
+  margin: 5px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
 }
-#searchbutton{
+#searchbutton {
   z-index: 1540;
   position: absolute;
-  float:right;
+  float: right;
   margin-left: calc(100% - 30px);
-  opacity: .5;
+  opacity: 0.5;
   cursor: pointer;
   top: 0;
   bottom: 0;
-  
 }
 
-
 #map {
-    height: calc(100vh - 22px);
+  height: calc(100vh - 22px);
 }
 #infoBox {
   position: absolute; /* Position it in the corner */
@@ -140,19 +139,19 @@ header button{
   line-height: 22px;
 }
 #search-container {
-    position: relative;
-    top: 50px;
-    z-index: 1002;
-    display:flexbox;
-    flex-direction: column;
-    align-items: baseline;
-    max-width: 300px;
-    border-radius: 8px;
-    height: fit-content;
+  position: relative;
+  top: 50px;
+  z-index: 1002;
+  display: flexbox;
+  flex-direction: column;
+  align-items: baseline;
+  max-width: 300px;
+  border-radius: 8px;
+  height: fit-content;
 }
- 
+
 #search-results {
-  list-style:none;
+  list-style: none;
   display: flex;
   border-color: rgb(0, 0, 0);
   border-style: solid;
@@ -169,7 +168,7 @@ header button{
   border-radius: 8px;
   font-size: 16px;
 }
-#searchdetails{
+#searchdetails {
   font-size: 15px;
   display: none;
   position: relative;
@@ -185,110 +184,105 @@ header button{
   z-index: 1000;
   background-color: #ffffffd7;
 }
-#searchdetails li{
+#searchdetails li {
   margin-left: -30px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   cursor: text;
   list-style-type: none;
 }
 
-
-#left-container{
-    display: flex;
-    position: fixed;
-    z-index: 1078;
+#left-container {
+  display: flex;
+  position: fixed;
+  z-index: 1078;
 }
-#trigger-icon{
-    font-size: 20px;
-    float: right;
-    padding: 5px;
-    z-index: 1005;
-    margin-top: 50px; /* Adjust as needed */
-    margin-left: 5px;
-    cursor: pointer;
-    background-color: white;
-    border: 2px solid black;
-    border-radius: 8px;
-    height: fit-content;
-    
+#trigger-icon {
+  font-size: 20px;
+  float: right;
+  padding: 5px;
+  z-index: 1005;
+  margin-top: 50px; /* Adjust as needed */
+  margin-left: 5px;
+  cursor: pointer;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 8px;
+  height: fit-content;
 }
-#box{
-    display: none;
-    position: fixed;
-    margin-top: 120px;
-    margin-left: 10px; /* Adjust as needed */
-    z-index: 1003;
-    background-color: hsl(0, 18%, 93%);
-    border-radius: 8px;
-    padding: 20px;
+#box {
+  display: none;
+  position: fixed;
+  margin-top: 120px;
+  margin-left: 10px; /* Adjust as needed */
+  z-index: 1003;
+  background-color: hsl(0, 18%, 93%);
+  border-radius: 8px;
+  padding: 20px;
   border: 1px solid black;
-
 }
-#closeBtn,#closeBtnD {
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    float:  right;
-  }
-  .box-input {
-    position: relative;
-    display: block;
-    align-items: center;
-    margin-left: 10px;
+#closeBtn,
+#closeBtnD {
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  float: right;
+}
+.box-input {
+  position: relative;
+  display: block;
+  align-items: center;
+  margin-left: 10px;
 
-    margin-bottom: 20px;
-  }
-  .box #search-results {
-    position: absolute;
-    margin-left: 22px;
-    top: 0;
-    margin-top: 40px;
-  }
+  margin-bottom: 20px;
+}
+.box #search-results {
+  position: absolute;
+  margin-left: 22px;
+  top: 0;
+  margin-top: 40px;
+}
 
-  
-  #fromMap{
-    float: lfet;
-    padding: 10px;
-    cursor: pointer;
-  }
-  #find{
-    background-color: white;
-    color: black;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    float:  right;
-    border-radius: 7px;
-  }
-  #distanceResult{
-    display: none;
-    background-color: #6F0E0E;
-    margin-top: 20px;
-    border-radius: 8px;
-    padding: 10px;
-    line-height: 25px;
-    color: white;
-  }
-  #search-results li{
-    cursor: pointer;
-    margin: 3.5px;
-    background-color: #efeaea;
-    border-radius: 3px;
-    padding: 2px;
-    font-size: 13px;
-    display: flex;
-    
-  }
-  #search-results li:hover{
-    background-color: rgb(223, 242, 236);
-  }
-  
-  body{
-    font-family: 'Kumbh Sans';
-  }
-  .leaflet-control-scale-line {
-    pointer-events: none;
-   
+#fromMap {
+  float: lfet;
+  padding: 10px;
+  cursor: pointer;
+}
+#find {
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  float: right;
+  border-radius: 7px;
+}
+#distanceResult {
+  display: none;
+  background-color: #6f0e0e;
+  margin-top: 20px;
+  border-radius: 8px;
+  padding: 10px;
+  line-height: 25px;
+  color: white;
+}
+#search-results li {
+  cursor: pointer;
+  margin: 3.5px;
+  background-color: #efeaea;
+  border-radius: 3px;
+  padding: 2px;
+  font-size: 13px;
+  display: flex;
+}
+#search-results li:hover {
+  background-color: rgb(223, 242, 236);
+}
+
+body {
+  font-family: 'Kumbh Sans';
+}
+.leaflet-control-scale-line {
+  pointer-events: none;
 }
 
 #controls-box {
@@ -315,11 +309,9 @@ header button{
 }
 #layers-dropdown {
   display: none;
-    position: absolute;
-    margin-right: 378px;
-    margin-top: 60px;
-
-    
+  position: absolute;
+  margin-right: 378px;
+  margin-top: 60px;
 }
 #layers-dropdown button {
   background-color: #000000b7;
@@ -335,20 +327,19 @@ header button{
   cursor: pointer;
   font-size: 10px;
 }
-#geographical-layer{
- position: absolute; 
- margin-left: 105px;
- color: black;
- box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
- padding-left: 15px;
-
+#geographical-layer {
+  position: absolute;
+  margin-left: 105px;
+  color: black;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  padding-left: 15px;
 }
-#political-layer{
+#political-layer {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   padding-left: 50px;
 }
 
-.dist-input{
+.dist-input {
   margin-left: 7px;
   padding: 3px;
   flex: 1;
@@ -358,26 +349,25 @@ header button{
   border-radius: 8px;
   float: right;
 }
-.box .box-input{
+.box .box-input {
   margin-left: -6px;
   margin-top: 40px;
   margin-bottom: 40px;
   display: flex;
 }
-#b-searchbutton{
+#b-searchbutton {
   z-index: 1540;
-  opacity: .5;
+  opacity: 0.5;
   cursor: pointer;
-  
 }
-#d-searchbutton{
+#d-searchbutton {
   z-index: 1540;
-  opacity: .5;
+  opacity: 0.5;
   cursor: pointer;
-  
 }
-#disclaimer,#keys{
-  position:fixed;
+#disclaimer,
+#keys {
+  position: fixed;
   display: flex;
   align-items: center;
   width: 100%;
@@ -387,29 +377,47 @@ header button{
   justify-content: center;
   z-index: 2000;
 }
-#disclaimer li{
+#disclaimer li {
   background: none;
 }
-#keys li{
+#keys li {
   background: none;
 }
-#message,#keysText {
- position: relative;
+#message,
+#keysText {
+  position: relative;
   color: #f2eeee;
- 
-  background-color: #6F0E0E;
+
+  background-color: #6f0e0e;
   justify-content: center;
   padding: 30px;
   margin: 0;
   max-width: 60%;
 }
-#messagec,#keysTextc{
+#messagec,
+#keysTextc {
   overflow-y: auto;
-  height: 350px;;
+  height: 350px;
 }
-#message button { 
+
+#keysTextc {
+  overflow-y: auto;
+  height: 400px;
+}
+
+#keysText {
+  position: relative;
+  color: black;
+  background-color: white;
+  justify-content: center;
+  padding: 30px;
+  margin: 0;
+  max-width: 60%;
+  border-radius: 22px;
+}
+#message button {
   position: absolute;
-  top:0;
+  top: 0;
   right: 0;
   padding: 10px;
   background: none;
@@ -418,9 +426,9 @@ header button{
   cursor: pointer;
   color: #ffffff;
 }
-#keys button { 
+#keys button {
   position: absolute;
-  top:0;
+  top: 0;
   right: 0;
   padding: 10px;
   background: none;
@@ -451,14 +459,109 @@ footer {
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
-#elevation{
+#elevation {
   align-items: right;
   float: right;
   margin-left: 10px;
-
 }
-#camera-height{
+#camera-height {
   align-items: right;
   float: right;
   margin-left: 10px;
+}
+
+/* General Styling */
+#keysTextc {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Header */
+#keysTextc h2 {
+  text-align: center;
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+/* Description */
+#keysTextc p {
+  text-align: center;
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* List Styling */
+#keysTextc ol {
+  list-style: none;
+  padding: 0;
+}
+
+#keysTextc li {
+  background: #fff;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  color: #222;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Shortcut Key Styling */
+#keysTextc strong {
+  background: #a04242;
+  color: #fff;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin: 10px;
+  display: inline-block;
+  min-width: 40px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Hover Effect */
+#keysTextc li:hover {
+  background: #f1f1f1;
+  transform: translateY(-2px);
+  transition: 0.2s ease-in-out;
+}
+
+/* Close Button Styling */
+#close-button-k {
+  position: absolute;
+
+  top: 20px !important;
+  right: 20px !important;
+  background: #ff4d4d;
+  color: black !important;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Hover Effect */
+#close-button-k:hover {
+  color: white !important;
+  background: #cc0000;
 }
