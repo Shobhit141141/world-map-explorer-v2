@@ -87,3 +87,35 @@ export const getProfile = async (req: Request, res: Response) => {
     handleResponse(res, 500, false, 'Error fetching profile', error);
   }
 };
+
+/**
+ * Updates the profile of the logged-in user.
+ *
+ * @param req - Express request object.
+ * @param res - Express response object.
+ *
+ * @returns A success message and the updated profile.
+ *
+ * @throws {404} If the user is not found.
+ * @throws {500} If an error occurs while updating the profile.
+ */
+export const updateProfile = async (req: Request, res: Response) => {
+  const userId = req.user?.userId;
+  const { username, email } = req.body;
+
+  try {
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      return handleResponse(res, 404, false, 'User not found');
+    }
+
+    user.username = username;
+    user.email = email;
+    await user.save();
+
+    handleResponse(res, 200, true, 'Profile updated successfully', user);
+  } catch (error) {
+    handleResponse(res, 500, false, 'Error updating profile', error);
+  }
+};
