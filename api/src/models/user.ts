@@ -3,6 +3,7 @@ import sequelize from '../config/db';
 import Bookmark from './bookmark';
 import KeyBinding from './keyBinding';
 import Settings from './settings';
+import Log from './logs';
 
 class User extends Model {
   public id!: number;
@@ -49,5 +50,8 @@ KeyBinding.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 User.hasOne(Settings, { foreignKey: 'userId', as: 'settings', onDelete: 'CASCADE' });
 Settings.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
+User.hasOne(Log, { foreignKey: 'userId', as: 'log', onDelete: 'CASCADE' });
+Log.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 export default User;
